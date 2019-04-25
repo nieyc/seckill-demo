@@ -2,7 +2,7 @@
 打包:
 mvn clean package -Dmaven.test.skip=true
 运行：
-java -jar lockDemo-0.0.1-SNAPSHOT.jar
+java -jar seckillDemo-0.0.1-SNAPSHOT.jar
 
 秒杀技术要点：
 1：库存不能超卖(分布式锁来实现)

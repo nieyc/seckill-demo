@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.nyc.seckill.good.dao.OrderDao">
+
+    <resultMap id="MallOrderMap" type="com.github.nyc.seckill.good.domain.Order">
+                <result property = "orderId" column = "order_id"/>
+                <result property = "userId" column = "user_id"/>
+                <result property = "goodId" column = "good_id"/>
+                <result property = "createTime" column = "create_time"/>
+                <result property = "orderStatus" column = "order_status"/>
+                <result property = "payTime" column = "pay_time"/>
+    </resultMap>
+
+
+    <insert id="addOrder" parameterType="com.github.nyc.seckill.good.domain.Order" >
+        insert into mall_order(
+               order_id,
+               user_id,
+               good_id,
+               create_time,
+               order_status,
+               pay_time
+        )values(
+                 #{orderId},
+                 #{userId},
+                 #{goodId},
+                 #{createTime},
+                 #{orderStatus},
+                 #{payTime}
+        )
+    </insert>
+
+    <update id="updateOrderById" parameterType="com.github.nyc.seckill.good.domain.Order">
+        update  mall_order set
+                  order_id=  #{orderId},
+                  user_id=  #{userId},
+                  good_id=  #{goodId},
+                  create_time=  #{createTime},
+                  order_status=  #{orderStatus},
+                  pay_time=  #{payTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteOrderById" parameterType="String" >
+        delete from  mall_order  where id=#{id}
+    </delete>
+
+    <select id="getOrderById" parameterType="String"  resultMap="MallOrderMap">
+        select * from mall_order where id=#{id}
+    </select>
+
+    <select id="getOrderList"   resultMap="MallOrderMap">
+    select * from mall_order
+   </select>
+
+
+    <select id="getOrderCount"   resultType="int">
+        select count(*) from mall_order
+    </select>
+
+
+
+</mapper>

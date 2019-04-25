@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.nyc.seckill.good.dao.GoodDao">
+
+    <resultMap id="MallGoodMap" type="com.github.nyc.seckill.good.domain.Good">
+                <result property = "id" column = "id"/>
+                <result property = "goodName" column = "good_name"/>
+                <result property = "goodPrice" column = "good_price"/>
+                <result property = "goodNum" column = "good_num"/>
+                <result property = "version" column = "version"/>
+    </resultMap>
+
+
+    <insert id="addGood" parameterType="com.github.nyc.seckill.good.domain.Good" >
+        insert into mall_good(
+               id,
+               good_name,
+               good_price,
+               good_num,
+               version
+        )values(
+                 #{id},
+                 #{goodName},
+                 #{goodPrice},
+                 #{goodNum},
+                 #{version}
+        )
+    </insert>
+
+    <update id="updateGoodById" parameterType="com.github.nyc.seckill.good.domain.Good">
+        update  mall_good set good_num=good_num-1   where id = #{id}
+    </update>
+    
+    <update id="updateGoodByVersion" parameterType="com.github.nyc.seckill.good.domain.Good">
+	   update mall_good set good_num=good_num-1,version=version+1 where id=#{id} and version=#{version} 
+	</update>
+
+    <delete id="deleteGoodById" parameterType="int" >
+        delete from  mall_good  where id=#{id}
+    </delete>
+
+    <select id="getGoodById" parameterType="int"  resultMap="MallGoodMap">
+        select * from mall_good where id=#{id}
+    </select>
+    
+    <select id="getGoodByIdByLock" parameterType="int"  resultMap="MallGoodMap">
+        select * from mall_good where id=#{id} for update
+    </select>
+    
+
+    <select id="getGoodList"   resultMap="MallGoodMap">
+        select * from mall_good
+   </select>
+
+    <select id="getGoodCount"   resultType="int">
+        select count(*) from mall_good
+    </select>
+
+</mapper>
